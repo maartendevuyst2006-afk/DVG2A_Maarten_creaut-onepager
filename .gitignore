@@ -1,0 +1,4 @@
+# Werkbestanden die niet bij de online site horen
+.claude/
+images/origineel/
+*.zip

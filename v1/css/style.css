@@ -1,0 +1,524 @@
+/* ==========================================================
+   Creative Automation – v1
+   Stijl: editorial, maar speels (kaarten, stickers, tags)
+   ========================================================== */
+
+:root {
+  --paper: #F5E6DF;    /* achtergrond */
+  --ink: #32312D;      /* tekst, randen, schaduw */
+  --accent: #E83E3E;   /* rood: decoratief + grote tekst */
+  --accent-2: #8A1820; /* bordeaux: koppen-accent, kaart */
+  --orange: #DA7702;   /* oranje: knop, sterretjes, focus */
+  --peach: #FEC097;    /* perzik: kaart, sticker */
+
+  --font-display: "Fraunces", Georgia, "Times New Roman", serif;
+  --font-body: "Work Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --container: 1200px;
+  --gutter: clamp(1.25rem, 4vw, 3rem);
+  --radius: 28px;
+  --shadow: 8px 8px 0 var(--ink);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Schuine band en gedraaide kaarten mogen de pagina niet breder maken */
+main {
+  overflow-x: clip;
+}
+
+h1,
+h2 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.05;
+  margin: 0;
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+}
+
+:focus-visible {
+  outline: 3px solid var(--orange);
+  outline-offset: 3px;
+}
+
+.container {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 var(--gutter);
+}
+
+/* ---------- Skip link ---------- */
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -3rem;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 0.5rem 1rem;
+  z-index: 10;
+}
+
+.skip-link:focus {
+  top: 1rem;
+}
+
+/* ---------- Header / nav ---------- */
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
+}
+
+.logo {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.25rem;
+  text-decoration: none;
+  letter-spacing: -0.01em;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 0.35rem 0.8rem;
+  border-radius: 999px;
+  transform: rotate(-3deg);
+  transition: transform 0.2s ease;
+}
+
+.logo:hover {
+  transform: rotate(3deg) scale(1.05);
+}
+
+.logo span {
+  color: var(--accent);
+}
+
+.nav-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-list a {
+  display: inline-block;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: none;
+  padding: 0.4rem 0.9rem;
+  border: 2px solid var(--ink);
+  border-radius: 999px;
+  background: var(--paper);
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.nav-list a:hover,
+.nav-list a[aria-current] {
+  background: var(--accent-2);
+  color: var(--paper);
+  transform: translateY(-2px) rotate(-2deg);
+}
+
+/* ---------- Hero ---------- */
+.hero {
+  padding: clamp(3rem, 8vw, 7rem) 0 clamp(3rem, 7vw, 6rem);
+}
+
+.hero-inner {
+  position: relative;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--accent-2);
+  margin-bottom: 1.5rem;
+}
+
+.dot {
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.hero-title {
+  font-size: clamp(3.5rem, 13vw, 11rem);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: 0.92;
+}
+
+.hero-title em {
+  font-style: italic;
+  font-weight: 600;
+  color: var(--accent-2);
+}
+
+.squiggle {
+  position: relative;
+  white-space: nowrap;
+}
+
+.squiggle::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -0.12em;
+  height: 0.22em;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 10' preserveAspectRatio='none'%3E%3Cpath d='M0 5 Q5 0 10 5 T20 5 T30 5 T40 5' fill='none' stroke='%23E83E3E' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E") repeat-x;
+  background-size: 0.9em 100%;
+}
+
+/* Draaiende sticker */
+.sticker {
+  position: absolute;
+  top: 0;
+  right: var(--gutter);
+  width: clamp(110px, 16vw, 180px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--peach);
+  border: 2px solid var(--ink);
+  box-shadow: 5px 5px 0 var(--ink);
+  display: grid;
+  place-items: center;
+  transform: rotate(-12deg);
+}
+
+.sticker svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  animation: spin 18s linear infinite;
+}
+
+.sticker text {
+  font-family: var(--font-body);
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  fill: var(--ink);
+}
+
+.sticker-core {
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  color: var(--accent);
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.hero-intro {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  row-gap: 2rem;
+  margin-top: clamp(2.5rem, 6vw, 4.5rem);
+}
+
+.lead {
+  grid-column: 6 / -1;
+  font-size: clamp(1.125rem, 1rem + 0.5vw, 1.375rem);
+  line-height: 1.55;
+  background: #FFFAF7;
+  padding: clamp(1.25rem, 3vw, 2rem);
+  border: 2px solid var(--ink);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.btn {
+  grid-column: 6 / -1;
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.2rem;
+  font-weight: 700;
+  text-decoration: none;
+  background: var(--orange);
+  color: var(--ink);
+  padding: 0.85rem 1.5rem;
+  border: 2px solid var(--ink);
+  border-radius: 999px;
+  box-shadow: 4px 4px 0 var(--ink);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.btn:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0 var(--ink);
+}
+
+.btn:active {
+  transform: translate(4px, 4px);
+  box-shadow: 0 0 0 var(--ink);
+}
+
+/* ---------- Marquee ---------- */
+.marquee {
+  background: var(--ink);
+  color: var(--paper);
+  border-block: 2px solid var(--ink);
+  overflow: hidden;
+  transform: rotate(-1.5deg);
+  margin: 1rem -2rem clamp(3rem, 7vw, 5rem);
+  padding: 1rem 0;
+}
+
+.marquee-track {
+  display: flex;
+  gap: 2rem;
+  width: max-content;
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 2.5vw, 2rem);
+  font-style: italic;
+  animation: marquee 30s linear infinite;
+}
+
+.marquee-track span:nth-child(even) {
+  color: var(--orange);
+  font-style: normal;
+}
+
+@keyframes marquee {
+  to { transform: translateX(-50%); }
+}
+
+/* ---------- Chapters ---------- */
+.chapters {
+  display: grid;
+  gap: clamp(2rem, 5vw, 3.5rem);
+  padding-bottom: clamp(4rem, 8vw, 7rem);
+}
+
+.chapter {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  column-gap: 2rem;
+  row-gap: 1.5rem;
+  padding: clamp(1.75rem, 5vw, 4rem);
+  border: 2px solid var(--ink);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  scroll-margin-top: 1.5rem;
+}
+
+.chapter:nth-child(odd) {
+  transform: rotate(-0.6deg);
+}
+
+.chapter:nth-child(even) {
+  transform: rotate(0.6deg);
+}
+
+.chapter:hover {
+  transform: rotate(0deg) translate(-3px, -3px);
+  box-shadow: 12px 12px 0 var(--ink);
+}
+
+.chapter--paper  { background: #FFFAF7; }
+.chapter--wine   { background: var(--accent-2); color: var(--paper); }
+.chapter--peach  { background: var(--peach); color: var(--ink); }
+.chapter--ink    { background: var(--ink); color: var(--paper); box-shadow: 8px 8px 0 var(--accent); }
+.chapter--ink:hover { box-shadow: 12px 12px 0 var(--accent); }
+
+.chapter-head {
+  grid-column: 1 / span 5;
+}
+
+.chapter-num {
+  display: inline-grid;
+  place-items: center;
+  width: clamp(3.5rem, 7vw, 5rem);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+  background: var(--paper);
+  color: var(--ink);
+  border: 2px solid var(--ink);
+  margin-bottom: 1.25rem;
+  transform: rotate(-8deg);
+  transition: transform 0.3s ease;
+}
+
+.chapter:hover .chapter-num {
+  transform: rotate(8deg) scale(1.08);
+}
+
+.chapter--paper .chapter-num { background: var(--accent); }
+
+.chapter h2 {
+  font-size: clamp(1.75rem, 1.2rem + 2vw, 2.75rem);
+  letter-spacing: -0.02em;
+}
+
+.chapter-body {
+  grid-column: 7 / -1;
+  align-self: end;
+}
+
+.chapter-body p {
+  max-width: 60ch;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  list-style: none;
+  margin: 1.5rem 0 0;
+  padding: 0;
+}
+
+.tags li {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  padding: 0.3rem 0.8rem;
+  border: 2px solid currentColor;
+  border-radius: 999px;
+  transition: transform 0.2s ease;
+}
+
+.tags li:hover {
+  transform: rotate(-4deg) scale(1.06);
+}
+
+/* ---------- Footer ---------- */
+.site-footer {
+  background: var(--ink);
+  color: var(--paper);
+  padding: clamp(3rem, 7vw, 5rem) 0 2rem;
+}
+
+.footer-big {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(2rem, 6vw, 4.5rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  margin-bottom: 3rem;
+}
+
+.footer-big em {
+  color: var(--orange);
+}
+
+.footer-meta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1rem;
+  font-size: 0.9375rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(245, 230, 223, 0.25);
+}
+
+.footer-meta a {
+  text-decoration-color: var(--accent);
+  text-underline-offset: 4px;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 900px) {
+  .hero-intro,
+  .chapter {
+    grid-template-columns: 1fr;
+  }
+
+  .lead,
+  .btn,
+  .chapter-head,
+  .chapter-body {
+    grid-column: 1 / -1;
+  }
+
+  .sticker {
+    top: auto;
+    bottom: calc(100% - 6rem);
+  }
+}
+
+@media (max-width: 640px) {
+  .header-inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .nav-list a {
+    font-size: 0.8125rem;
+    padding: 0.3rem 0.75rem;
+  }
+
+  .eyebrow {
+    max-width: calc(100% - 110px);
+  }
+
+  .sticker {
+    width: 96px;
+    right: 0.5rem;
+    top: -0.75rem;
+    bottom: auto;
+  }
+
+  :root {
+    --shadow: 5px 5px 0 var(--ink);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .sticker svg,
+  .marquee-track {
+    animation: none;
+  }
+
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+  }
+}

@@ -1,0 +1,1267 @@
+/* ==========================================================
+   Creative Automation – v2
+   Richting: "de automatiseringsmachine"
+   Skills: design-taste-frontend (art direction + huisregels),
+           impeccable + ui-ux-pro-max (UX, toegankelijkheid),
+           design-motion-principles (motion, zie onderaan + script.js)
+   ========================================================== */
+
+/* ---------- Tokens ---------- */
+:root {
+  /* Palet uit v1, donker opgesteld */
+  --ground: #32312D;      /* achtergrond (v1: tekstkleur) */
+  --surface: #3C3B36;     /* toonstap voor vlakken (geen lijnen, geen schaduw) */
+  --surface-2: #47463F;   /* tweede toonstap, voor UI-fragmenten */
+  --ink: #F5E6DF;         /* lopende tekst (v1: achtergrond) */
+  --ink-soft: #D6C8C1;    /* secundaire notities, ≥6:1 op alle donkere vlakken */
+  --accent: #DA7702;      /* oranje: acties en actieve staat */
+  --accent-hover: #EC8A16;
+  --on-accent: #1A1917;   /* bijna zwart op oranje en perzik (5,5:1 en 11:1) */
+  --peach: #FEC097;       /* het grote kleurvlak */
+  --wine: #8A1820;        /* bordeaux sectie */
+  --red: #E83E3E;         /* enkel kleine details, nooit tekst */
+
+  --font: "Space Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-code: ui-monospace, "Cascadia Code", Consolas, monospace; /* enkel in echte code */
+
+  /* Vijf maten, niet meer */
+  --size-display: clamp(3.25rem, 11.5vw, 11rem);
+  --size-h2: clamp(1.75rem, 1rem + 3.4vw, 4.25rem);
+  --size-statement: clamp(1.25rem, 1rem + 1vw, 1.875rem);
+  --size-body: clamp(1rem, 0.96rem + 0.2vw, 1.125rem);
+  --size-small: 0.875rem;
+
+  --margin: clamp(1rem, 2.5vw, 2rem);
+  --section-gap: clamp(6rem, 12vw, 11rem);
+  --header-h: 4.25rem;
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+/* ---------- Basis ---------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--header-h) + 1rem); /* sticky header bedekt geen ankers of focus */
+  scrollbar-color: var(--surface-2) var(--ground);
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  background: var(--ground);
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: var(--size-body);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  caret-color: var(--accent);
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+h1, h2, h3, p, ol, ul, figure {
+  margin: 0;
+}
+
+h2 {
+  font-size: var(--size-h2);
+  font-weight: 700;
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+
+a {
+  color: inherit;
+  text-underline-offset: 0.2em;
+  text-decoration-thickness: 2px;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.skip-link {
+  position: absolute;
+  left: var(--margin);
+  top: -4rem;
+  z-index: 100;
+  background: var(--accent);
+  color: var(--on-accent);
+  padding: 0.75rem 1rem;
+  font-weight: 700;
+}
+
+.skip-link:focus {
+  top: 0.75rem;
+}
+
+/* ---------- Header: sticky, een gewone balk ---------- */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--ground);
+}
+
+.bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  min-height: var(--header-h);
+  padding: 0 var(--margin);
+}
+
+.wordmark {
+  font-weight: 700;
+  font-size: 1.0625rem;
+  letter-spacing: -0.02em;
+  text-decoration: none;
+  white-space: nowrap;
+  min-height: 2.75rem;
+  display: inline-flex;
+  align-items: center;
+}
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.site-nav ul {
+  display: flex;
+  gap: 0.25rem;
+  list-style: none;
+  padding: 0;
+}
+
+.site-nav ul a {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.75rem;
+  padding: 0 0.75rem;
+  font-size: var(--size-small);
+  font-weight: 500;
+  color: var(--ink-soft);
+  text-decoration: none;
+  transition: color 160ms var(--ease-out);
+}
+
+/* Onderstreping groeit vanuit links bij hover en bij de actieve sectie */
+.site-nav ul a::after {
+  content: "";
+  position: absolute;
+  left: 0.75rem;
+  right: 0.75rem;
+  bottom: 0.45rem;
+  height: 2px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 260ms var(--ease-out);
+}
+
+.site-nav ul a:hover,
+.site-nav ul a[aria-current="true"] {
+  color: var(--ink);
+}
+
+.site-nav ul a:hover::after,
+.site-nav ul a[aria-current="true"]::after {
+  transform: scaleX(1);
+}
+
+.menu-toggle {
+  display: none;
+}
+
+/* Scrollvoortgang: functionele balk onder de header */
+.progress {
+  height: 3px;
+  background: var(--surface);
+}
+
+.progress span {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+  transform: scaleX(var(--progress, 0));
+  transform-origin: left;
+}
+
+/* ---------- Hero ---------- */
+.hero {
+  padding: clamp(2.5rem, 6vw, 5rem) var(--margin) var(--section-gap);
+}
+
+.hero-title {
+  font-size: var(--size-display);
+  font-weight: 700;
+  line-height: 0.88;
+  letter-spacing: -0.05em;
+  margin-left: -0.04em;
+}
+
+.hero-title .line {
+  display: block;
+  overflow: hidden;
+  padding-bottom: 0.06em; /* ruimte voor de onderkant van letters bij de mask-reveal */
+}
+
+.hero-title .line > span {
+  display: inline-block;
+}
+
+/* Voor wie: nieuwe studenten, volgend academiejaar */
+.audience {
+  margin-top: clamp(1.25rem, 2.5vw, 2rem);
+  max-width: 30ch;
+  font-size: clamp(1.375rem, 0.95rem + 1.5vw, 2.25rem);
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: var(--peach);
+}
+
+.hero-body {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 2rem;
+  margin-top: clamp(2.5rem, 5vw, 4.5rem);
+}
+
+.lead {
+  grid-column: 1 / span 7;
+  font-size: var(--size-statement);
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+  max-width: 34ch;
+}
+
+.hero-side {
+  grid-column: 9 / -1;
+  align-self: end;
+  display: grid;
+  gap: 1.75rem;
+  justify-items: start;
+}
+
+/* ---------- Gedeelde sectie-afstand ---------- */
+.chapter {
+  padding: 0 var(--margin) var(--section-gap);
+}
+
+.chapter p {
+  max-width: 62ch;
+}
+
+/* ---------- Beeldbewerking: de batch-machine ---------- */
+.batch {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 2rem;
+  align-items: start;
+}
+
+.batch-text {
+  grid-column: 1 / span 5;
+  display: grid;
+  gap: 1.75rem;
+}
+
+.actions {
+  list-style: none;
+  padding: 0;
+  background: var(--surface);
+  counter-reset: none;
+}
+
+.actions li {
+  position: relative;
+  padding: 0.9rem 1rem 0.9rem 2.75rem;
+  color: var(--ink-soft);
+  transition: color 200ms var(--ease-out), background-color 200ms var(--ease-out);
+}
+
+.actions li + li {
+  border-top: 2px solid var(--ground); /* echte UI: het actiepaneel van Photoshop */
+}
+
+.actions li::before {
+  content: "";
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  width: 0.75rem;
+  height: 0.75rem;
+  margin-top: -0.375rem;
+  background: var(--surface-2);
+  transition: background-color 200ms var(--ease-out), transform 200ms var(--ease-out);
+}
+
+.actions li.is-active {
+  color: var(--ink);
+  background: var(--surface-2);
+}
+
+.actions li.is-active::before {
+  background: var(--red);
+  transform: scale(1.15);
+}
+
+.batch-machine {
+  grid-column: 7 / -1;
+  background: var(--surface);
+  padding: clamp(1rem, 2vw, 1.5rem);
+}
+
+.batch-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(0.5rem, 1vw, 0.75rem);
+}
+
+/* Eén productfoto, getekend in code */
+.photo {
+  position: relative;
+  aspect-ratio: 4 / 5;
+  background: var(--surface-2);
+  overflow: hidden;
+}
+
+.photo .canvas {
+  position: absolute;
+  inset: 0;
+  background: var(--tone);
+  transform: scale(0.62);           /* origineel: kleine foto met lege rand */
+  transition: transform 520ms var(--ease-out);
+}
+
+.photo .product {
+  position: absolute;
+  left: 50%;
+  bottom: 18%;
+  width: 30%;
+  height: 46%;
+  margin-left: -15%;
+  background: var(--ground);
+  border-radius: 40% 40% 8% 8% / 22% 22% 8% 8%;
+  transform: scale(1.35);
+  transition: transform 520ms var(--ease-out);
+}
+
+.photo .logo {
+  position: absolute;
+  right: 8%;
+  top: 7%;
+  padding: 0.15rem 0.3rem;
+  font-size: clamp(0.5rem, 0.7vw, 0.6875rem);
+  font-weight: 700;
+  background: var(--wine);
+  color: var(--ink);
+  opacity: 0;
+  transform: translateY(-6px);
+  transition: opacity 220ms var(--ease-out), transform 220ms var(--ease-out);
+}
+
+.photo.is-done .canvas {
+  transform: scale(1);              /* generative fill: achtergrond uitgebreid */
+}
+
+.photo.is-done .product {
+  transform: scale(1);
+}
+
+.photo.is-done .logo {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---------- Social media + live demo ---------- */
+.social {
+  background: var(--wine);
+  padding-top: var(--section-gap);
+  margin-bottom: var(--section-gap);
+}
+
+.social-intro {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 2rem;
+  align-items: end;
+  margin-bottom: clamp(3rem, 6vw, 5rem);
+}
+
+.social-intro h2 {
+  grid-column: 1 / span 6;
+}
+
+.social-intro p {
+  grid-column: 8 / -1;
+}
+
+.demo {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 2rem;
+  align-items: start;
+}
+
+.demo-input {
+  grid-column: 1 / span 4;
+  display: grid;
+  gap: 1.25rem;
+  background: var(--ground);
+  padding: clamp(1.25rem, 2.5vw, 2rem);
+}
+
+.field {
+  display: grid;
+  gap: 0.375rem;
+}
+
+.field label {
+  font-size: var(--size-small);
+  color: var(--ink-soft);
+}
+
+.field input {
+  min-height: 3rem;
+  padding: 0 0.875rem;
+  background: var(--surface);
+  color: var(--ink);
+  font: 400 var(--size-body) / 1 var(--font);
+  border: 2px solid var(--surface-2);
+  border-radius: 0;
+  transition: border-color 160ms var(--ease-out);
+}
+
+.field input:hover {
+  border-color: #5A5952;
+}
+
+.field input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.demo-output {
+  grid-column: 5 / -1;
+  display: grid;
+  grid-template-columns: 1.15fr 0.65fr;
+  grid-template-areas:
+    "post story"
+    "banner banner";
+  gap: 1.25rem;
+}
+
+.format {
+  display: grid;
+  gap: 0.6rem;
+  align-content: start;
+  container-type: inline-size; /* cqi = breedte van het formaat, ook voor de padding */
+}
+
+.format figcaption {
+  font-size: var(--size-small);
+  color: var(--ink-soft);
+}
+
+.format .art {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.art-title {
+  font-weight: 700;
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+.art-tag {
+  line-height: 1.25;
+}
+
+.art-cta {
+  align-self: flex-start;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.format--post { grid-area: post; }
+.format--post .art {
+  aspect-ratio: 1;
+  padding: 7cqi;
+  background: var(--accent);
+  color: var(--on-accent);
+  justify-content: space-between;
+}
+.format--post .art-title { font-size: 11cqi; }
+.format--post .art-tag { font-size: 5.5cqi; max-width: 80%; }
+.format--post .art-cta { font-size: 4.5cqi; padding: 3cqi 4.5cqi; background: var(--on-accent); color: var(--accent); }
+
+.format--story { grid-area: story; }
+.format--story .art {
+  aspect-ratio: 9 / 16;
+  padding: 10cqi 9cqi;
+  background: var(--ground);
+  color: var(--ink);
+  justify-content: flex-end;
+  gap: 6cqi;
+}
+.format--story .art-title { font-size: 11cqi; color: var(--accent); }
+.format--story .art-tag { font-size: 8cqi; }
+.format--story .art-cta { font-size: 7cqi; padding: 5cqi 7cqi; background: var(--accent); color: var(--on-accent); margin-top: 4cqi; }
+
+.format--banner { grid-area: banner; }
+.format--banner .art {
+  aspect-ratio: 970 / 250;
+  padding: 0 4cqi;
+  background: var(--ink);
+  color: var(--on-accent);
+  flex-direction: row;
+  align-items: center;
+  gap: 3cqi;
+}
+.format--banner .art-title { font-size: 5.6cqi; flex: 0 1 auto; }
+.format--banner .art-tag { font-size: 2.2cqi; flex: 1; }
+.format--banner .art-cta { align-self: center; font-size: 2cqi; padding: 1.6cqi 2.4cqi; background: var(--on-accent); color: var(--accent); white-space: nowrap; }
+
+/* ---------- Content generatie: een volledig accentvlak ---------- */
+.chapter.ai {
+  display: block;
+  background: var(--peach);
+  color: var(--on-accent);
+  padding-top: var(--section-gap);
+  margin-bottom: var(--section-gap);
+}
+
+.chapter.ai h2 {
+  max-width: 24ch;
+  font-size: clamp(1.75rem, 0.2rem + 6vw, 6rem);
+}
+
+.chapter.ai ::selection {
+  background: var(--on-accent);
+  color: var(--accent);
+}
+
+.chapter.ai :focus-visible {
+  outline-color: var(--on-accent);
+}
+
+.field-body {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 2rem;
+  margin-top: clamp(2.5rem, 5vw, 4.5rem);
+}
+
+.field-text {
+  grid-column: 1 / span 6;
+  font-size: var(--size-statement);
+  line-height: 1.4;
+}
+
+.tasks {
+  grid-column: 8 / -1;
+  list-style: none;
+  padding: 0;
+  align-self: end;
+}
+
+.tasks li {
+  font-size: var(--size-statement);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  padding: 0.8rem 0;
+}
+
+.tasks li + li {
+  border-top: 3px solid var(--on-accent); /* gevulde balk, geen haarlijn */
+}
+
+/* ---------- Vibe coding: terminal ---------- */
+.code-title {
+  margin-bottom: clamp(2.5rem, 5vw, 4rem);
+}
+
+.terminal {
+  background: var(--surface);
+}
+
+.terminal-bar {
+  display: flex;
+  padding: 0.75rem 1.25rem;
+  background: var(--surface-2);
+  font-size: var(--size-small);
+  color: var(--ink-soft);
+}
+
+.terminal-body {
+  display: flex;
+  gap: 0.9em;
+  padding: clamp(1.25rem, 3vw, 2.5rem);
+  font-family: var(--font-code);
+  font-size: clamp(0.9375rem, 0.8rem + 0.6vw, 1.375rem);
+  line-height: 1.7;
+}
+
+.terminal-body p {
+  max-width: 68ch;
+}
+
+.t-prompt {
+  color: var(--peach);
+  font-weight: 700;
+}
+
+.caret {
+  display: inline-block;
+  width: 0.6em;
+  height: 1.1em;
+  vertical-align: text-bottom;
+  background: var(--red);
+}
+
+/* ---------- E-mailmarketing: de flow ---------- */
+.mail-head {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 2rem;
+  margin-bottom: clamp(3rem, 6vw, 5rem);
+}
+
+.mail-head h2 {
+  grid-column: 1 / span 7;
+}
+
+.mail-head p {
+  grid-column: 1 / span 7;
+}
+
+.flow {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.75rem;
+  list-style: none;
+  padding: 0;
+}
+
+.flow li {
+  position: relative;
+  display: grid;
+  gap: 0.5rem;
+  align-content: start;
+  min-height: 7rem;
+  padding: 1.5rem 1.25rem;
+  background: var(--surface);
+  transition: background-color 360ms var(--ease-out), color 360ms var(--ease-out);
+}
+
+/* Verbindingsbalk naar de volgende stap */
+.flow li:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: -0.75rem;
+  width: 0.75rem;
+  height: 4px;
+  margin-top: -2px;
+  background: var(--surface-2);
+  transition: background-color 360ms var(--ease-out);
+}
+
+.flow strong {
+  font-size: clamp(1.125rem, 0.85rem + 0.6vw, 1.5rem);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+.flow li.is-on {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+.flow li.is-on:not(:last-child)::after {
+  background: var(--accent);
+}
+
+/* ---------- Footer: de naam komt terug op volle breedte ---------- */
+.site-footer {
+  padding: clamp(3rem, 6vw, 5rem) var(--margin) clamp(2rem, 4vw, 3.5rem);
+  background: var(--surface);
+  overflow: hidden;
+}
+
+.footer-name {
+  font-size: clamp(2.5rem, 10.6vw, 10.5rem);
+  font-weight: 700;
+  line-height: 0.85;
+  letter-spacing: -0.055em;
+  white-space: nowrap;
+  margin-left: -0.04em;
+  color: var(--accent);
+  display: block;
+  text-decoration: none;
+  transition: color 200ms var(--ease-out);
+}
+
+/* ==========================================================
+   AI-beelden (Weave + Figma AI, klei-stijl), vrijstaand:
+   achtergrond verwijderd, dus geen kader of vlak; de objecten
+   staan rechtstreeks naast de tekst op de sectiekleur.
+   ========================================================== */
+.media {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.media[hidden] {
+  display: none;
+}
+
+.media img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 34rem;
+  object-fit: contain;
+}
+
+/* Hero: titel, dan intro links en het beeld groot rechts */
+.hero-body {
+  grid-template-rows: auto 1fr;
+}
+
+.hero-body .lead {
+  grid-column: 1 / span 6;
+  grid-row: 1;
+}
+
+.hero-body .hero-side {
+  grid-column: 1 / span 5;
+  grid-row: 2;
+  align-self: start;
+}
+
+.media--hero {
+  grid-column: 7 / -1;
+  grid-row: 1 / span 2;
+  align-self: center;
+}
+
+/* Beeldbewerking: breed panorama onder de machine */
+.media--wide {
+  grid-column: 2 / -2;
+  margin-top: clamp(1.5rem, 4vw, 3rem);
+}
+
+/* Social media: onder de titel, tekst ernaast */
+.social-intro .media--social {
+  grid-column: 1 / span 6;
+  grid-row: 2;
+}
+
+.social-intro h2 {
+  grid-row: 1;
+}
+
+.social-intro p {
+  grid-row: 1 / span 2;
+  align-self: end;
+}
+
+/* Content generatie: beeld boven de takenlijst */
+.media--ai {
+  grid-column: 8 / -1;
+  grid-row: 1;
+}
+
+.field-body .field-text {
+  grid-row: 1 / span 2;
+  align-self: end;
+}
+
+.field-body .tasks {
+  grid-row: 2;
+}
+
+/* Vibe coding: terminal en beeld naast elkaar */
+.code-body {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 2rem;
+  align-items: stretch;
+}
+
+.code-body .terminal {
+  grid-column: 1 / span 8;
+}
+
+.media--code {
+  grid-column: 9 / -1;
+}
+
+/* Zolang een beeld ontbreekt, nemen tekst en terminal de volle breedte */
+.code-body:has(.media[hidden]) .terminal {
+  grid-column: 1 / -1;
+}
+
+/* E-mailmarketing: beeld rechts naast titel en tekst */
+.mail-head h2 { grid-row: 1; }
+.mail-head p { grid-row: 2; }
+
+.media--mail {
+  grid-column: 9 / -1;
+  grid-row: 1 / span 2;
+  align-self: end;
+}
+
+/* ==========================================================
+   Achtergrond-hover (geïnspireerd op looveuroopa.ee)
+   Een vaste laag achter de pagina: onderaan een warme gloed die
+   de muis volgt, daarboven hoogtelijnen die net donkerder zijn
+   dan de achtergrond. Waar de gloed komt, lichten de lijnen op.
+   Gekleurde secties (bordeaux, perzik) dekken de laag af.
+   ========================================================== */
+/* Beelden die nog moeten verschijnen (scale 1.08) of gekanteld zijn bij hover
+   mogen de pagina niet breder maken */
+main {
+  overflow-x: clip;
+}
+
+.bg-effect {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.bg-glow {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 44rem;
+  height: 44rem;
+  margin: -22rem 0 0 -22rem; /* het midden van de gloed ligt op het muispunt */
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(218, 119, 2, 0.5) 0%,
+    rgba(232, 62, 62, 0.28) 38%,
+    rgba(138, 24, 32, 0.16) 58%,
+    rgba(138, 24, 32, 0) 72%
+  );
+  filter: blur(40px);
+  opacity: 0;
+  transition: opacity 600ms var(--ease-out);
+  will-change: transform;
+}
+
+.bg-effect.is-ready .bg-glow {
+  opacity: 1;
+}
+
+.bg-lines {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* ==========================================================
+   Hover (design-motion-principles + impeccable)
+   - enkel voor een echte muis: (hover: hover) and (pointer: fine)
+   - 160–260ms, custom ease-out, geen "scale op alles":
+     elk onderdeel krijgt een eigen, passende reactie
+   - klikbare dingen: duidelijke feedback; niet-klikbare dingen: subtiel,
+     zonder pointer-cursor (geen valse belofte dat je kunt klikken)
+   - individuele translate/rotate, zodat ze niet botsen met de
+     entrance-animatie die transform gebruikt
+   ========================================================== */
+.wordmark,
+.menu-toggle,
+.footer-name {
+  transition: color 180ms var(--ease-out), background-color 180ms var(--ease-out), transform 160ms var(--ease-out);
+}
+
+.media img {
+  transition: transform 1400ms var(--ease-out), translate 260ms var(--ease-out), rotate 260ms var(--ease-out), filter 260ms var(--ease-out);
+}
+
+.actions li,
+.tasks li,
+.flow li,
+.photo,
+.format .art {
+  transition:
+    color 200ms var(--ease-out),
+    background-color 200ms var(--ease-out),
+    outline-color 200ms var(--ease-out),
+    translate 220ms var(--ease-out);
+}
+
+.photo .logo {
+  transition: opacity 220ms var(--ease-out), transform 220ms var(--ease-out), rotate 220ms var(--ease-out);
+}
+
+.menu-toggle:active,
+.footer-name:active {
+  transform: scale(0.97);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  /* Wordmark: kleurt mee met de acties */
+  .wordmark:hover {
+    color: var(--accent);
+  }
+
+  .menu-toggle:hover {
+    background: #52514A;
+  }
+
+  /* Beelden: je "pakt het kleifiguurtje op" */
+  .media:hover img {
+    translate: 0 -10px;
+    rotate: -1.5deg;
+    filter: drop-shadow(0 22px 18px rgba(0, 0, 0, 0.28)); /* zweeft echt, dus mag een schaduw */
+  }
+
+  /* Photoshop-acties: de stap die je aanwijst licht op, zoals in het actiepaneel */
+  .actions li:hover {
+    color: var(--ink);
+    background: var(--surface-2);
+    translate: 4px 0;
+  }
+
+  .actions li:hover::before {
+    background: var(--accent);
+  }
+
+  /* Batch: een foto komt even naar voren, het logo kantelt */
+  .photo:hover {
+    translate: 0 -4px;
+  }
+
+  .photo:hover .logo {
+    rotate: -8deg;
+  }
+
+  /* Demo: het formaat dat je aanwijst wordt geselecteerd, zoals in Figma */
+  .format:hover .art {
+    translate: 0 -6px;
+    outline: 2px solid var(--peach);
+    outline-offset: 4px;
+  }
+
+  .format:hover figcaption {
+    color: var(--ink);
+  }
+
+  /* Cowork-taken: schuiven op als een checklist */
+  .tasks li:hover {
+    translate: 10px 0;
+    color: var(--wine);
+  }
+
+  /* Terminal: de balk wordt actief */
+  .terminal:hover .terminal-bar {
+    color: var(--ink);
+  }
+
+  /* Flow: de stap die je aanwijst springt eruit */
+  .flow li:hover {
+    translate: 0 -6px;
+    background: var(--wine);
+    color: var(--ink);
+  }
+
+  /* Footer: naam kleurt perzik en schuift licht op */
+  .footer-name:hover {
+    color: var(--peach);
+  }
+}
+
+/* ==========================================================
+   Motion (design-motion-principles)
+   Weging: landingspagina → Jakub (primair, verzorgd) + Jhey
+   (secundair, het batch-moment). Enkel transform/opacity/filter.
+   Content is zichtbaar zonder JS: verbergen gebeurt pas als
+   html.js actief is en er geen reduced-motion gevraagd wordt.
+   ========================================================== */
+@media (prefers-reduced-motion: no-preference) {
+  .js [data-reveal] {
+    opacity: 0;
+    transform: translateY(24px);
+    filter: blur(4px);
+    transition:
+      opacity 600ms var(--ease-out),
+      transform 600ms var(--ease-out),
+      filter 600ms var(--ease-out);
+    transition-delay: calc(var(--i, 0) * 80ms);
+  }
+
+  .js [data-reveal].is-in {
+    opacity: 1;
+    transform: none;
+    filter: blur(0);
+  }
+
+  /* Beelden: zachte inzoom-beweging bij het verschijnen (het "bewegende beeld") */
+  .js .media[data-reveal] img {
+    transform: scale(1.08);
+    transition: transform 1400ms var(--ease-out);
+    transition-delay: calc(var(--i, 0) * 80ms);
+  }
+
+  .js .media[data-reveal].is-in img {
+    transform: none;
+  }
+
+  /* Hero: de titel schuift per regel uit een masker omhoog */
+  .js .hero-title .line > span {
+    transform: translateY(105%);
+    animation: rise 900ms var(--ease-out) forwards;
+  }
+
+  .js .hero-title .line:nth-child(2) > span {
+    animation-delay: 90ms;
+  }
+
+  @keyframes rise {
+    to { transform: none; }
+  }
+
+  .js .caret {
+    animation: blink 1s steps(1) infinite;
+  }
+
+  @keyframes blink {
+    50% { opacity: 0; }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ==========================================================
+   Responsive: de telefoon is een eigen compositie
+   ========================================================== */
+@media (max-width: 1100px) {
+  .site-nav ul a {
+    padding: 0 0.5rem;
+  }
+
+  .demo-input {
+    grid-column: 1 / span 5;
+  }
+
+  .demo-output {
+    grid-column: 6 / -1;
+  }
+}
+
+@media (max-width: 960px) {
+  .menu-toggle {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+    justify-content: center;
+    width: 2.75rem;
+    padding: 0;
+    background: var(--surface-2);
+    color: var(--ink);
+    border: 0;
+    cursor: pointer;
+  }
+
+  .menu-toggle[aria-expanded="true"] {
+    background: var(--accent);
+    color: var(--on-accent);
+  }
+
+  .site-nav {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+    padding: 0.5rem var(--margin) 1.5rem;
+    background: var(--ground);
+    box-shadow: 0 24px 32px rgba(0, 0, 0, 0.45); /* zweeft echt: het menu */
+  }
+
+  .site-nav.is-open {
+    display: flex;
+  }
+
+  .site-nav ul {
+    flex-direction: column;
+  }
+
+  .site-nav ul a {
+    width: 100%;
+    min-height: 3rem;
+    font-size: 1.25rem;
+    color: var(--ink);
+    padding: 0;
+  }
+
+  .site-nav ul a::after {
+    left: 0;
+    right: auto;
+    width: 2rem;
+    bottom: 0.4rem;
+  }
+
+  .hero-body,
+  .batch,
+  .social-intro,
+  .demo,
+  .field-body,
+  .mail-head {
+    grid-template-columns: 1fr;
+  }
+
+  .lead,
+  .hero-side,
+  .batch-text,
+  .batch-machine,
+  .social-intro h2,
+  .social-intro p,
+  .demo-input,
+  .demo-output,
+  .field-text,
+  .tasks,
+  .mail-head h2,
+  .mail-head p {
+    grid-column: 1 / -1;
+  }
+
+  /* Beelden: op tablet en telefoon gewoon in de leesvolgorde */
+  .code-body {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-body .lead,
+  .hero-body .hero-side,
+  .media--hero,
+  .media--wide,
+  .social-intro .media--social,
+  .social-intro h2,
+  .social-intro p,
+  .media--ai,
+  .field-body .field-text,
+  .field-body .tasks,
+  .code-body .terminal,
+  .media--code,
+  .mail-head h2,
+  .mail-head p,
+  .media--mail {
+    grid-column: 1 / -1;
+    grid-row: auto;
+  }
+
+  .media img {
+    max-height: 22rem;
+  }
+
+  .flow {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .flow li:nth-child(2)::after {
+    display: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .wordmark {
+    font-size: 1rem;
+  }
+
+  .batch-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .demo-output {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "post"
+      "story"
+      "banner";
+    gap: 1.25rem;
+  }
+
+  .format--story {
+    width: 62%;
+  }
+
+  .flow {
+    grid-template-columns: 1fr;
+  }
+
+  .flow li {
+    min-height: 0;
+  }
+
+  /* Verbinding wordt verticaal */
+  .flow li:not(:last-child)::after,
+  .flow li:nth-child(2)::after {
+    display: block;
+    top: auto;
+    bottom: -0.75rem;
+    right: auto;
+    left: 1.25rem;
+    width: 4px;
+    height: 0.75rem;
+    margin-top: 0;
+  }
+}

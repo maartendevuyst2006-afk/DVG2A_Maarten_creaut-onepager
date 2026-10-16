@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Creative Automation – voor nieuwe studenten digitale vormgeving</title>
+  <meta name="description" content="Start je volgend academiejaar in digitale vormgeving? Ontdek wat je leert in Creative Automation: repetitief werk automatiseren en AI inzetten als creatieve assistent.">
+  <meta name="theme-color" content="#32312D">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <script>document.documentElement.classList.add("js");</script>
+</head>
+<body>
+  <!-- Alle zichtbare tekst komt letterlijk uit content.md. Labels die enkel
+       voor schermlezers bestaan (aria-label, skip-link) zijn toegankelijkheid. -->
+  <a class="skip-link" href="#main">Naar de inhoud</a>
+
+  <!-- Achtergrond: hoogtelijnen in code getekend + een gloed die de muis volgt -->
+  <div class="bg-effect" aria-hidden="true">
+    <div class="bg-glow"></div>
+    <canvas class="bg-lines"></canvas>
+  </div>
+
+  <header class="site-header">
+    <div class="bar">
+      <a class="wordmark" href="#top">Creative Automation</a>
+
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Menu">
+        <svg viewBox="0 0 24 24" width="24" height="24" aria-hidden="true"><path d="M3 7h18M3 12h18M3 17h18" stroke="currentColor" stroke-width="2" fill="none"/></svg>
+      </button>
+
+      <nav id="site-nav" class="site-nav" aria-label="Onderdelen">
+        <ul>
+          <li><a href="#beeldbewerking">Beeldbewerking</a></li>
+          <li><a href="#social-media">Social media</a></li>
+          <li><a href="#content-generatie">Content generatie</a></li>
+          <li><a href="#vibe-coding">Vibe coding</a></li>
+          <li><a href="#e-mailmarketing">E-mailmarketing</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="progress" aria-hidden="true"><span></span></div>
+  </header>
+
+  <main id="main">
+
+    <!-- Hero: titel + intro -->
+    <section class="hero" id="top" aria-labelledby="hero-title">
+      <h1 id="hero-title" class="hero-title">
+        <span class="line"><span>Creative</span></span>
+        <span class="line"><span>Automation</span></span>
+      </h1>
+      <!-- Doelgroep (op vraag toegevoegd, buiten content.md) -->
+      <p class="audience" data-reveal>Volgend academiejaar start je als nieuwe student digitale vormgeving met dit vak. Dit is wat je leert.</p>
+      <div class="hero-body">
+        <p class="lead" data-reveal>Creative Automation leert je hoe je als digitale vormgever repetitief werk automatiseert en AI inzet als creatieve assistent. Je werkt minder met de hand, produceert meer varianten en houdt toch de controle over het design.</p>
+        <p class="hero-side" data-reveal>Doorheen het semester werk je aan een periodeopdracht: een volledige marketingcampagne voor een product, van briefing tot afgewerkte content.</p>
+        <figure class="media media--hero" data-reveal><img src="images/intro.png" width="917" height="411" alt="Klei-illustratie: een vrolijke machine op een lopende band maakt van één lege kaart een stapel kleurrijke postervarianten." fetchpriority="high" onerror="this.parentElement.hidden=true"></figure>
+      </div>
+    </section>
+
+    <!-- Beeldbewerking -->
+    <section class="chapter batch" id="beeldbewerking" aria-labelledby="h-beeld">
+      <div class="batch-text">
+        <h2 id="h-beeld" data-reveal>Beeldbewerking: acties &amp; batch</h2>
+        <p data-reveal>Je neemt Photoshop-acties op die een reeks bewerkingen onthouden: resizen, achtergronden uitbreiden met generative fill, een logo plaatsen en exporteren. Met batch-verwerking pas je die actie in één keer toe op een volledige map productfoto's. Zo verwerk je tientallen beelden consistent, zonder ze één voor één te openen.</p>
+
+        <ol class="actions" data-ui data-reveal aria-label="Photoshop-acties">
+          <li>Resizen</li>
+          <li>Achtergronden uitbreiden met generative fill</li>
+          <li>Een logo plaatsen</li>
+          <li>Exporteren</li>
+        </ol>
+      </div>
+
+      <div class="batch-machine" data-ui data-reveal>
+        <div class="batch-grid" aria-hidden="true"></div>
+      </div>
+
+      <figure class="media media--wide" data-reveal><img src="images/beeldbewerking.png" width="1064" height="414" alt="Klei-illustratie: een robot stempelt een logo op productfoto's die op een lopende band voorbijkomen." decoding="async" onerror="this.parentElement.hidden=true"></figure>
+    </section>
+
+    <!-- Social media + live demo -->
+    <section class="chapter social" id="social-media" aria-labelledby="h-social">
+      <div class="social-intro">
+        <h2 id="h-social" data-reveal>Social media: Figma automation</h2>
+        <figure class="media media--social" data-reveal><img src="images/social-media.png" width="792" height="447" alt="Klei-illustratie: een smartphone met posts, een story en een banner, gevoed door een spreadsheet." decoding="async" onerror="this.parentElement.hidden=true"></figure>
+        <p data-reveal>In Figma Buzz bouw je templates voor verschillende formaten, zoals Instagram-posts, stories en display-banners. Via bulk create vul je die templates automatisch met data uit een CSV- of XLSX-bestand: titels, taglines, call-to-actions en afbeeldingen. Eén spreadsheet levert zo een volledige campagne op in alle formaten, met een consistent design.</p>
+      </div>
+
+      <div class="demo" id="demo" data-reveal>
+        <form class="demo-input" data-ui aria-label="Bulk create" onsubmit="return false">
+          <div class="field">
+            <label for="f-title">Titels</label>
+            <input id="f-title" name="title" type="text" maxlength="28" value="Creative Automation" autocomplete="off">
+          </div>
+          <div class="field">
+            <label for="f-tagline">Taglines</label>
+            <input id="f-tagline" name="tagline" type="text" maxlength="48" value="Een volledige campagne in alle formaten" autocomplete="off">
+          </div>
+          <div class="field">
+            <label for="f-cta">Call-to-actions</label>
+            <input id="f-cta" name="cta" type="text" maxlength="22" value="Bulk create" autocomplete="off">
+          </div>
+        </form>
+
+        <div class="demo-output" role="group" aria-label="Instagram-posts, stories en display-banners">
+          <figure class="format format--post" data-ui>
+            <div class="art">
+              <p class="art-title" data-bind="title">Creative Automation</p>
+              <p class="art-tag" data-bind="tagline">Een volledige campagne in alle formaten</p>
+              <span class="art-cta" data-bind="cta">Bulk create</span>
+            </div>
+            <figcaption>Instagram-posts</figcaption>
+          </figure>
+          <figure class="format format--story" data-ui>
+            <div class="art">
+              <p class="art-title" data-bind="title">Creative Automation</p>
+              <p class="art-tag" data-bind="tagline">Een volledige campagne in alle formaten</p>
+              <span class="art-cta" data-bind="cta">Bulk create</span>
+            </div>
+            <figcaption>Stories</figcaption>
+          </figure>
+          <figure class="format format--banner" data-ui>
+            <div class="art">
+              <p class="art-title" data-bind="title">Creative Automation</p>
+              <p class="art-tag" data-bind="tagline">Een volledige campagne in alle formaten</p>
+              <span class="art-cta" data-bind="cta">Bulk create</span>
+            </div>
+            <figcaption>Display-banners</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- Content generatie -->
+    <section class="chapter ai" id="content-generatie" aria-labelledby="h-content">
+      <h2 id="h-content" data-reveal>Content generatie: Weave &amp; Claude Cowork</h2>
+      <div class="field-body">
+        <p class="field-text" data-reveal>Je genereert beelden en video met AI-tools zoals Weave, en leert hoe je met goede prompts een consistente stijl bewaakt. Met Claude Cowork laat je AI zelfstandig taken uitvoeren op je eigen bestanden: teksten schrijven, documenten opmaken en content plannen. Je ontdekt waar AI je werk versnelt en waar je zelf moet bijsturen.</p>
+        <figure class="media media--ai" data-reveal><img src="images/content-generatie.png" width="976" height="378" alt="Klei-illustratie: een camera maakt beelden terwijl een kleine robot documenten ordent en content plant." decoding="async" onerror="this.parentElement.hidden=true"></figure>
+        <ul class="tasks" aria-label="Claude Cowork">
+          <li data-reveal>Teksten schrijven</li>
+          <li data-reveal>Documenten opmaken</li>
+          <li data-reveal>Content plannen</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Vibe coding: de tekst zelf is de prompt -->
+    <section class="chapter code" id="vibe-coding" aria-labelledby="h-code">
+      <h2 id="h-code" class="code-title" data-reveal>Vibe coding &amp; web</h2>
+
+      <div class="code-body">
+      <div class="terminal" data-ui data-reveal>
+        <div class="terminal-bar"><span>Claude Code</span></div>
+        <div class="terminal-body">
+          <span class="t-prompt" aria-hidden="true">&gt;</span>
+          <p id="terminal-text">Met Claude Code bouw je websites en tools door in gewone taal te beschrijven wat je wil. Je breidt Claude uit met skills, en via de Figma MCP-koppeling laat je Claude ontwerpen genereren in Figma en designs omzetten naar HTML en CSS. Je bouwt zelfs je eigen Figma-plugin. Je websites zet je online met GitHub Pages.</p>
+        </div>
+      </div>
+      <figure class="media media--code" data-reveal><img src="images/vibe-coding.png" width="730" height="497" alt="Klei-illustratie: een laptop met codeblokken, een tekstballon en een puzzelstuk dat als plugin vastklikt." decoding="async" onerror="this.parentElement.hidden=true"></figure>
+      </div>
+    </section>
+
+    <!-- E-mailmarketing -->
+    <section class="chapter mail" id="e-mailmarketing" aria-labelledby="h-mail">
+      <div class="mail-head">
+        <h2 id="h-mail" data-reveal>E-mailmarketing &amp; newsletters</h2>
+        <p data-reveal>In MailerLite bouw je inschrijvingsformulieren die je op een website plaatst, ontwerp je e-mailcampagnes en zet je automatisatieflows op: een nieuwe inschrijver krijgt bijvoorbeeld automatisch een reeks welkomstmails. Zo leer je hoe merken hun publiek opbouwen en blijven bereiken.</p>
+        <figure class="media media--mail" data-reveal><img src="images/e-mailmarketing.png" width="956" height="346" alt="Klei-illustratie: enveloppen gaan van een inschrijvingsformulier naar een brievenbus." decoding="async" onerror="this.parentElement.hidden=true"></figure>
+      </div>
+
+      <ol class="flow" aria-label="MailerLite">
+        <li><strong>Inschrijvingsformulieren</strong></li>
+        <li><strong>E-mailcampagnes</strong></li>
+        <li><strong>Automatisatieflows</strong></li>
+        <li><strong>Welkomstmails</strong></li>
+      </ol>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <a class="footer-name" href="#top">Creative Automation</a>
+  </footer>
+
+  <script src="js/script.js"></script>
+</body>
+</html>

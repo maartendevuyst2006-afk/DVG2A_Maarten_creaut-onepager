@@ -54,7 +54,7 @@ Een onepage website bouwen met Claude Code die **nieuwe studenten digitale vormg
 ### Excelleren (voor 5/5)
 - [x] AI-beelden in een consistente, eigen stijl (3D-klei, v2-palet)
 - [x] Meer dan 2 skills (4)
-- [ ] Site online via GitHub Pages + link in dit logboek
+- [x] Site online via GitHub Pages + link in dit logboek
 - [ ] Extra aandacht voor toegankelijkheid (contrast, toetsenbordnavigatie, alt-teksten)
 
 ### Indienen – `DVG2A_Maarten_output.zip`
@@ -62,7 +62,7 @@ Een onepage website bouwen met Claude Code die **nieuwe studenten digitale vormg
 - [x] `DVG2A_Maarten_v2.png`
 - [ ] `DVG2A_Maarten_logboek.md`
 - [ ] `DVG2A_Maarten_code.zip` (eindversie: html, css, js, images)
-- [ ] Optioneel: GitHub Pages-link
+- [x] Optioneel: GitHub Pages-link (https://maartendevuyst2006-afk.github.io/DVG2A_Maarten_creaut-onepager/)
 
 ---
 
@@ -232,8 +232,38 @@ Een onepage website bouwen met Claude Code die **nieuwe studenten digitale vormg
 **Prompt 20** · *afronden (excelleren: GitHub Pages)*
 > Zet de site eerst online via GitHub Pages en voeg de link toe aan het logboek.
 
+*Verloop:* Git en GitHub CLI stonden niet op mijn pc. Na mijn akkoord heeft Claude ze geïnstalleerd via winget. Ik heb zelf ingelogd bij GitHub (device-code op github.com/login/device, in Chrome). Daarna maakte Claude een publieke repo aan, pushte de site (commits met mijn GitHub-noreply-adres, zodat mijn e-mailadres niet publiek wordt) en zette GitHub Pages aan op `main`. Werkbestanden (`.claude/`, `images/origineel/`) staan in `.gitignore`.
+
+*Resultaat:* de site staat online en is getest (HTTP 200, alle beelden, CSS en scripts laden).
+- **Live:** https://maartendevuyst2006-afk.github.io/DVG2A_Maarten_creaut-onepager/
+- **v1 online:** https://maartendevuyst2006-afk.github.io/DVG2A_Maarten_creaut-onepager/v1/
+- **Repo:** https://github.com/maartendevuyst2006-afk/DVG2A_Maarten_creaut-onepager
+
+**Prompt 21** · *afronden (GitHub Pages)*
+> Ik ben ingelogd bij GitHub in de terminal. Ga verder met de repo en GitHub Pages.
+
+*Resultaat:* de CLI was nog niet aangemeld; Claude legde uit hoe de device-login werkt.
+
+**Prompt 22** · *afronden (GitHub Pages)*
+> De terminal toont nu 'Logged in as'. Ga verder met de repo en GitHub Pages.
+
+*Resultaat:* nog steeds niet aangemeld volgens `gh auth status`; Claude vroeg om het opnieuw te proberen.
+
+**Prompt 23** · *afronden (GitHub Pages)*
+> ik ben ingelogd via browser crome
+
+*Resultaat:* Claude startte de login opnieuw zonder terminalvraag en gaf de eenmalige code om in Chrome te bevestigen.
+
+**Prompt 24** · *afronden (GitHub Pages)*
+> Ik heb de code ingevuld op github.com/login/device en Authorize geklikt. Ga verder.
+
+*Resultaat:* aangemeld als `maartendevuyst2006-afk`; repo aangemaakt, gepusht en GitHub Pages aangezet (zie prompt 20).
+
 ---
 
 ## Online versie
 
-GitHub Pages: _nog toe te voegen_
+GitHub Pages: **https://maartendevuyst2006-afk.github.io/DVG2A_Maarten_creaut-onepager/**
+
+Versie 1: https://maartendevuyst2006-afk.github.io/DVG2A_Maarten_creaut-onepager/v1/  
+Broncode: https://github.com/maartendevuyst2006-afk/DVG2A_Maarten_creaut-onepager

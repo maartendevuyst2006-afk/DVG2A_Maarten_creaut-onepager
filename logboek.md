@@ -49,19 +49,19 @@ Een onepage website bouwen met Claude Code die **nieuwe studenten digitale vormg
 - [x] **9. Per onderdeel een beeld** – gegenereerd in één consistente stijl, opgeslagen in `images/`, door Claude in de pagina geplaatst (met alt-teksten).
 
 ### Afronden
-- [ ] **10. Logboek aanvullen** – alle prompts letterlijk en in volgorde, met label v1 / v2 / beelden (dit bestand).
+- [x] **10. Logboek aanvullen** – alle prompts letterlijk en in volgorde, met label v1 / v2 / beelden (dit bestand).
 
 ### Excelleren (voor 5/5)
 - [x] AI-beelden in een consistente, eigen stijl (3D-klei, v2-palet)
 - [x] Meer dan 2 skills (4)
 - [x] Site online via GitHub Pages + link in dit logboek
-- [ ] Extra aandacht voor toegankelijkheid (contrast, toetsenbordnavigatie, alt-teksten)
+- [x] Extra aandacht voor toegankelijkheid (contrast, toetsenbordnavigatie, alt-teksten): contrast nagemeten in de browser (WCAG AA), skip-link, zichtbare focusrand, menu sluit met Escape, touch targets van 44px, alt-teksten bij alle beelden, `prefers-reduced-motion` en tekst voor schermlezers bij de terminal-animatie
 
 ### Indienen – `DVG2A_Maarten_output.zip`
 - [x] `DVG2A_Maarten_v1.png`
 - [x] `DVG2A_Maarten_v2.png`
-- [ ] `DVG2A_Maarten_logboek.md`
-- [ ] `DVG2A_Maarten_code.zip` (eindversie: html, css, js, images)
+- [x] `DVG2A_Maarten_logboek.md`
+- [x] `DVG2A_Maarten_code.zip` (eindversie: html, css, js, images)
 - [x] Optioneel: GitHub Pages-link (https://maartendevuyst2006-afk.github.io/DVG2A_Maarten_creaut-onepager/)
 
 ---
@@ -258,6 +258,11 @@ Een onepage website bouwen met Claude Code die **nieuwe studenten digitale vormg
 > Ik heb de code ingevuld op github.com/login/device en Authorize geklikt. Ga verder.
 
 *Resultaat:* aangemeld als `maartendevuyst2006-afk`; repo aangemaakt, gepusht en GitHub Pages aangezet (zie prompt 20).
+
+**Prompt 25** · *afronden (indienen)*
+> Maak de inzending klaar: DVG2A_Maarten_code.zip met de eindversie (html, css, js, images) en DVG2A_Maarten_output.zip met de twee screenshots, het logboek als DVG2A_Maarten_logboek.md en de code-zip.
+
+*Resultaat:* `DVG2A_Maarten_code.zip` (index.html, css/, js/, images/ met de 6 vrijstaande beelden en de prompts) en `DVG2A_Maarten_output.zip` (DVG2A_Maarten_v1.png, DVG2A_Maarten_v2.png, DVG2A_Maarten_logboek.md, DVG2A_Maarten_code.zip) aangemaakt.
 
 ---
 
